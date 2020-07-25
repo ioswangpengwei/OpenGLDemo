@@ -74,16 +74,19 @@ void RenderScene(void)
      GL_DEPTH_BUFFER_BIT :指示深度缓存区
      GL_STENCIL_BUFFER_BIT:指示模板缓冲区
      */
+    glClear(GL_COLOR_BUFFER_BIT);
+
     modelViewMatrixStack.PushMatrix();
     modelViewMatrixStack.Translate(0, 0, viewZ);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
-    glBindTexture(GL_TEXTURE_2D, textures[TEXTURE_FLOOR]);
     shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, transformPipeline.GetModelViewProjectionMatrix(), 0);
-    floorBatch.Draw();
-    glBindTexture(GL_TEXTURE_2D, textures[TEXTURE_BRICK]);
 
+    glBindTexture(GL_TEXTURE_2D, textures[TEXTURE_FLOOR]);
+    floorBatch.Draw();
+    
+    glBindTexture(GL_TEXTURE_2D, textures[TEXTURE_BRICK]);
     leftWallBatch.Draw();
     rightWallBatch.Draw();
+    
     glBindTexture(GL_TEXTURE_2D, textures[TEXTURE_CEILING]);
     ceilingBatch.Draw();
     
@@ -224,6 +227,12 @@ void SpecialKeys(int key, int x, int y)
     //更新窗口，即可回调到RenderScene函数里
     glutPostRedisplay();
 }
+//关闭渲染环境
+void ShutdownRC(void)
+{
+    //删除纹理
+    glDeleteTextures(TEXTURE_COUNT, textures);
+}
 
 int main(int argc,char *argv[])
 {
@@ -273,6 +282,7 @@ int main(int argc,char *argv[])
     //设置我们的渲染环境
     setupRC();
     glutMainLoop();
+    ShutdownRC();
  
     return  0;
     
