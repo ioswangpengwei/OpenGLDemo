@@ -98,7 +98,6 @@
         -0.5,-0.5,0.5,  0, 1.f,
         -0.5,-0.5,-0.5,  0.f,0.f,
     };
-    
     glEnable(GL_DEPTH_TEST);
     glGenBuffers(1, &bufferID);
     glBindBuffer(GL_ARRAY_BUFFER, bufferID);
