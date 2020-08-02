@@ -23,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.delegate = self;
     [self setUpConfig];
     [self setUpVertexData];
     [self setUpTexture];
@@ -147,14 +146,14 @@
     glDrawArrays(GL_TRIANGLES, 0, 36);
     
 }
-- (void)glkViewControllerUpdate:(GLKViewController *)controller {
+
+-(void)update {
     static float angle = 0;
     angle +=0.1;
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     GLKMatrix4 modelViewMatrix = GLKMatrix4Rotate(GLKMatrix4Identity, angle, 1, 1,0 );
     self.baseEffect.transform.modelviewMatrix = modelViewMatrix;
-    [self.baseEffect prepareToDraw];
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+
 
 }
 
